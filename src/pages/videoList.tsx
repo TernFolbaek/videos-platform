@@ -14,37 +14,39 @@ const fileUrl = `${baseUrl}${urlPath}`;
 const VideoList = () => {
   const [videos, setVideos] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchVideos = async () => {
-  //     try {
-  //       const response = await axios.get("/api/videos");
-  //       setVideos(response.data.map((video: any) => ({
-  //         ...video,
-  //         video_path: `../public/uploads/${video.video_path.split('/').slice(-1)[0]}`,
-  //       })));
-  //       console.log(fileUrl)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchVideos();
-  // }, []);
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await axios.get("/api/videos");
+        setVideos(response.data.map((video: any) => ({
+          ...video,
+          video_path: `/uploads/${video.video_path.split('/').slice(-1)[0]}`,
+          thumbnail_path: `/uploads/${video.thumbnail_path.split('/').slice(-1)[0]}`,
+        })));
+        console.log(fileUrl)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVideos();
+  }, []);
 
   return (
-    <div>
-      {/* {videos.map((video: any) => (
-        <div key={video.id}>
+    <div className="video-container">
+      {videos.map((video: any) => (
+        <div className="video" key={video.id}>
           <Link href={video.video_path}>
               <h2>{video.title}</h2>
-              <h2>{video.video_path}</h2>
+              <h2>{video.thumbnail_path}</h2>
           </Link>
-          <p>{video.description}</p> */}
+          <p>{video.description}</p> 
           <video width="320" height="240" controls>
-          <source src='/public/uploads/ec42a2ff-0168-4783-a544-d5aa29a7170e.mp4' type="video/mp4" />
+            <img src={video.thumbnail_path} alt="" />
+          <source src={video.video_path} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        {/* </div>
-      ))} */}
+         </div>
+      ))} 
     </div>
   );
 };
