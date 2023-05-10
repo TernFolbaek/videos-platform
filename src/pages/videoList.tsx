@@ -7,44 +7,44 @@ const path = require('path');
 const filePath = path.join(__dirname, 'src', 'public', 'uploads', 'f9965ae4-9fdc-4ab7-b9ea-ecb591c8db60.mov');
 
 // Construct the file's URL path
-const baseUrl = 'https://localhost:3000/';
+const baseUrl = 'http://localhost:3000/';
 const urlPath = filePath.replace(__dirname, '').replace(/\\/g, '/');
 const fileUrl = `${baseUrl}${urlPath}`;
 
 const VideoList = () => {
   const [videos, setVideos] = useState([]);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await axios.get("/api/videos");
-        setVideos(response.data.map((video: any) => ({
-          ...video,
-          video_path: `../public/uploads/${video.video_path.split('/').slice(-1)[0]}`,
-        })));
-        console.log(fileUrl)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchVideos();
-  }, []);
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     try {
+  //       const response = await axios.get("/api/videos");
+  //       setVideos(response.data.map((video: any) => ({
+  //         ...video,
+  //         video_path: `../public/uploads/${video.video_path.split('/').slice(-1)[0]}`,
+  //       })));
+  //       console.log(fileUrl)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchVideos();
+  // }, []);
 
   return (
     <div>
-      {videos.map((video: any) => (
+      {/* {videos.map((video: any) => (
         <div key={video.id}>
           <Link href={video.video_path}>
               <h2>{video.title}</h2>
               <h2>{video.video_path}</h2>
           </Link>
-          <p>{video.description}</p>
+          <p>{video.description}</p> */}
           <video width="320" height="240" controls>
-          <source src={fileUrl} type="video/mp4" />
+          <source src='/public/uploads/ec42a2ff-0168-4783-a544-d5aa29a7170e.mp4' type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        </div>
-      ))}
+        {/* </div>
+      ))} */}
     </div>
   );
 };
