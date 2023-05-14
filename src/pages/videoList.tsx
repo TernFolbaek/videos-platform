@@ -37,6 +37,7 @@ const VideoList = () => {
               <h2>{video.title}</h2>
           </Link>
           <p>{video.description}</p>
+          <p>{video.video_path}</p>
           <video width="320" height="240" controls>
             <source src={video.video_path} type="video/mp4" />
             Your browser does not support the video tag.
