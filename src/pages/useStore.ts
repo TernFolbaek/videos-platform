@@ -7,6 +7,12 @@ type UserState = {
   clearUser: () => void;
 };
 
+type VideoState = {
+  videoId: string | number| null;
+  setVideoId: (videoId: string | null) => void;
+  clearVideoId: () => void;
+};
+
 const useStore = create<UserState>((set: SetState<UserState>) => {
   const isServer = typeof window === 'undefined';
   
@@ -23,6 +29,15 @@ const useStore = create<UserState>((set: SetState<UserState>) => {
       !isServer && localStorage.removeItem('token');
       set({ user: null });
     },
+   
+  };
+});
+
+export const videoStore = create<VideoState>((set: SetState<VideoState>) => {
+  return {
+    videoId: null,
+    setVideoId: (videoId: string | number | null) => set({ videoId }),
+    clearVideoId: () => set({ videoId: null })
   };
 });
 

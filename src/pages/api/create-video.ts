@@ -9,7 +9,7 @@ const isCustomFile = (file: CustomFile | CustomFile[]): file is CustomFile => {
   return !Array.isArray(file);
 };
 
-const uploadDir = path.join(process.cwd(), 'src/public/uploads');
+const uploadDir = path.join(process.cwd(), '/public/uploads');
 
 export const config = {
   api: {
