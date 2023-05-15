@@ -13,7 +13,7 @@ type VideoState = {
   clearVideoId: () => void;
 };
 
-const useStore = create<UserState>((set: SetState<UserState>) => {
+export const useStore = create<UserState>((set: SetState<UserState>) => {
   const isServer = typeof window === 'undefined';
   
   //only assign token a value if we are not on the server side since it is not supported by Node
