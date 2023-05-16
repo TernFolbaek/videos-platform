@@ -5,7 +5,7 @@ import axios from 'axios';
 
 interface Comment {
   username: string;
-  commentId: string;
+  id: number;
   content: string;
   created_at: string;
 }
@@ -137,7 +137,7 @@ const VideoId = () => {
 
       <h3>Comments</h3>
       {comments.map((comment) => (
-        <div key={Math.random()}>
+        <div key={comment.id}>
           <p>User: {comment.username}</p>
           <p>{comment.content}</p>
           <p>Timestamp: {comment.created_at}</p>

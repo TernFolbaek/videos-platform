@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { videoStore } from './useStore';
+import { videoStore, useStore} from './useStore';
 
 const VideoList = () => {
   const [videos, setVideos] = useState([]);
   const setVideoId = videoStore((state) => state.setVideoId)
+  const setUserId = useStore((state) => state.setUserId);
+  const {user} = useStore()
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -24,6 +27,19 @@ const VideoList = () => {
     };
     fetchVideos();
   }, []);
+  useEffect(() => {
+        (async () => {
+          try {
+            const response = await axios.post('/api/userId', { username: user });
+            setUserId(response.data.userId);
+            console.log(response.data.userId)
+          } catch (err) {
+            console.error(err);
+          }
+        })();
+    }, []);
+
+
 
   const setId = (id : string | null) => {
     setVideoId(id)
