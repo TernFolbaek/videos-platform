@@ -1,12 +1,15 @@
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
-
+import Navbar from './nav';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const AnyComponent = Component as any;
 
   return (
-      <AnyComponent {...pageProps} />
+      <div>
+        <Navbar />
+        <AnyComponent {...pageProps} />
+      </div>
   )
 }
 

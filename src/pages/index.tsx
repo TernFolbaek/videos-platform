@@ -1,39 +1,51 @@
-import Link from "next/link";
-import styled from "styled-components";
-import VideoList from "./videoList";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import { videoStore } from './useStore';
 
-export default function Navbar() {
+const VideoList = () => {
+  const [videos, setVideos] = useState([]);
+  const setVideoId = videoStore((state) => state.setVideoId)
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await axios.get('/api/videos');
+        console.log(response)
+        setVideos(
+          response.data.map((video: any) => ({
+            ...video,
+            video_path: `/uploads/${video.video_path.split('/').slice(-1)[0]}`,
+            thumbnail_path: `/uploads/${video.thumbnail_path.split('/').slice(-1)[0]}`,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVideos();
+  }, []);
+
+  const setId = (id : string | null) => {
+    setVideoId(id)
+  }
+
   return (
-    <div>
-      <$NavbarContainer>
-        <$LinkContainer>
-          <Link href="/">
-              <h1>Home</h1>
+    <div className="video-container">
+      {videos.map((video: any) => (
+        <div className="video" key={video.id}>
+          <Link onClick={() => setId(video.id)} href={`/${video.id}`}>
+              <h2>{video.title}</h2>
           </Link>
-          <Link href="/sign-login">
-              <h1>Profile</h1>
-          </Link>
-        </$LinkContainer>
-      </$NavbarContainer>
-      <VideoList/>
-
+          <p>{video.description}</p>
+          <p>{video.video_path}</p>
+          <video width="320" height="240" controls>
+            <source src={video.video_path} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
-export const $NavbarContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  margin-top: 12px;
-`;
-
-export const $LinkContainer = styled.div`
-  display:flex;
-  justify-content: space-around;
-  width 100%;
-  font-size: 25px;
-
-`;
-
-
+export default VideoList;

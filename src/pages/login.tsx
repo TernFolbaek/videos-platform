@@ -10,6 +10,7 @@ export default function Login() {
   const setUser = useStore((state) => state.setUser);
   const [token, setToken] = useState('');
 
+  
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -38,6 +39,7 @@ export default function Login() {
       console.error(error);
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>

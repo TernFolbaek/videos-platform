@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { videoStore, useStore } from "./useStore";
+import axios from 'axios';
 
 interface Comment {
-  userId: string;
+  username: string;
   commentId: string;
-  text: string;
-  timestamp: string;
+  content: string;
+  created_at: string;
 }
 
 const VideoId = () => {
@@ -16,12 +17,13 @@ const VideoId = () => {
     video_path: "",
     thumbnail_path: "",
   });
+  const setUserId = useStore((state) => state.setUserId)
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const { videoId } = videoStore();
   const {user} = useStore();
-  console.log(user)
   const isMounted = useRef(false);
+  const {userId} = useStore()
 
   useEffect(() => {
     if (!isMounted.current) {
@@ -37,7 +39,6 @@ const VideoId = () => {
           });
 
           const data = await response.json();
-          console.log(typeof data.video_path);
           data.video_path = `/uploads/${data.video_path
             .split("/")
             .slice(-1)[0]}`;
@@ -53,6 +54,42 @@ const VideoId = () => {
     
   }, [videoId]);
 
+  useEffect(() => {
+    if(user){
+      (async () => {
+        try {
+          const response = await axios.post('/api/userId', { username: user });
+          setUserId(response.data.userId);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch("/api/getComments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ videoId: videoId }),
+        });
+
+        const data = await response.json();
+        setComments(data.map((comment: any) => ({
+          ...comment,
+        })));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  },[])
+
+
+
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setNewComment(event.target.value);
   };
@@ -67,9 +104,10 @@ const VideoId = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: "user-id", // Replace with the actual user ID
+          userId: userId, // Replace with the actual user ID
           commentId: videoId,
           text: newComment,
+          username: user,
           timestamp: new Date().toISOString(),
         }),
       });
@@ -77,6 +115,7 @@ const VideoId = () => {
       const commentData = await response.json();
 
       setComments([...comments, commentData]);
+      console.log(comments)
       setNewComment("");
     } catch (error) {
       console.log(error);
@@ -98,10 +137,10 @@ const VideoId = () => {
 
       <h3>Comments</h3>
       {comments.map((comment) => (
-        <div key={comment.commentId}>
-          <p>User: {comment.userId}</p>
-          <p>{comment.text}</p>
-          <p>Timestamp: {comment.timestamp}</p>
+        <div key={Math.random()}>
+          <p>User: {comment.username}</p>
+          <p>{comment.content}</p>
+          <p>Timestamp: {comment.created_at}</p>
         </div>
       ))}
 
