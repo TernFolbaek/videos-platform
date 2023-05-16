@@ -50,6 +50,7 @@ const VideoId = () => {
         }
       })();
     }
+    
   }, [videoId]);
 
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import useStore from "./useStore";
+import {useStore} from "./useStore";
 import styled from "styled-components";
 
 

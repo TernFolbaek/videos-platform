@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { getConnection } from './db';
 import { RowDataPacket } from 'mysql2';
 
+
 export default function configurePassport(passport: PassportStatic) {
   passport.use(
       new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
@@ -22,7 +23,7 @@ export default function configurePassport(passport: PassportStatic) {
           if (!isValidPassword) {
             return done(null, false, { message: 'Incorrect password' });
           }
-    
+          
           return done(null, user);
         } catch (error) {
           done(error);

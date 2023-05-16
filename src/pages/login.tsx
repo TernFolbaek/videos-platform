@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import useStore from './useStore';
+import {useStore} from './useStore';
 import { JwtPayload } from 'jsonwebtoken';
 import  jwt  from 'jsonwebtoken';
 
