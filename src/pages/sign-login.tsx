@@ -6,6 +6,7 @@ import styled from "styled-components";
 export default function SL() {
 
   const {user} = useStore()
+  console.log(user)
 
   if (user) {
     // User is logged in, show their information

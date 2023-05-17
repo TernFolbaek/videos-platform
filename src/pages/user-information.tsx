@@ -27,7 +27,6 @@ const UserInformation = () => {
     console.log(user)
     console.log(userId)
     if(user && userId){
-      console.log('here')
       setStoredUser(user)
       setStoredUserId(userId)
     }
