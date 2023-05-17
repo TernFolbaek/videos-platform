@@ -31,7 +31,7 @@ export default function Login() {
         if (decodedToken) {
           setUser(decodedToken.username);
         }
-        alert('Login successful!');
+        window.location.href = '/'
       } else {
         alert('Login failed. Please check your credentials and try again.');
       }

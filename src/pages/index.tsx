@@ -27,19 +27,6 @@ const VideoList = () => {
     };
     fetchVideos();
   }, []);
-  useEffect(() => {
-        (async () => {
-          try {
-            const response = await axios.post('/api/userId', { username: user });
-            setUserId(response.data.userId);
-            console.log(response.data.userId)
-          } catch (err) {
-            console.error(err);
-          }
-        })();
-    }, []);
-
-
 
   const setId = (id : string | null) => {
     setVideoId(id)
