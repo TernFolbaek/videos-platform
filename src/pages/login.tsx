@@ -2,15 +2,33 @@ import { useState, FormEvent } from 'react';
 import {useStore} from './useStore';
 import { JwtPayload } from 'jsonwebtoken';
 import  jwt  from 'jsonwebtoken';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const setUser = useStore((state) => state.setUser);
-  const [token, setToken] = useState('');
+  const setUserId = useStore((state) => state.setUserId);
 
+  const [token, setToken] = useState('');
+  const {user} = useStore()
   
+  useEffect(() => {
+    if(user){
+      (async () => {
+        try {
+          const response = await axios.post('/api/userId', { username: user });
+          setUserId(response.data.userId);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    }
+  }, [user]);
+  
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -39,7 +57,8 @@ export default function Login() {
       console.error(error);
     }
   };
-  
+
+
 
   return (
     <form onSubmit={handleSubmit}>
