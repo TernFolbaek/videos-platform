@@ -1,6 +1,6 @@
 import { useStore } from "./useStore";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 const UserInformation = () => {
   const { user, userId } = useStore();
@@ -11,6 +11,26 @@ const UserInformation = () => {
   const [storedUserId, setStoredUserId] = useState('');
 
   useEffect(() => {
+    if(user){
+      (async () => {
+        try {
+          const response = await axios.post('/api/userId', { username: user });
+          setUserId(response.data.userId);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(user)
+    console.log(userId)
+    if(user && userId){
+      console.log('here')
+      setStoredUser(user)
+      setStoredUserId(userId)
+    }
     const localUser = localStorage.getItem('user') || '';
     const localUserId = localStorage.getItem('userId') || '';
 
@@ -39,7 +59,7 @@ const UserInformation = () => {
         }
       })();
     }
-  }, []);
+  }, [userId]);
 
   const logOut = async () => {
     try {
