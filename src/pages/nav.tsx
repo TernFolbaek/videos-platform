@@ -31,6 +31,8 @@ export const $LinkContainer = styled.div`
   justify-content: space-around;
   width 100%;
   font-size: 25px;
+  color: black;
+  text-decoration: none;
 
 `;
 
