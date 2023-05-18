@@ -1,11 +1,17 @@
 import Link from "next/link";
 import styled from "styled-components";
 import VideoList from ".";
+import { useTheme } from "../context/themeContext";
+import ThemeToggleButton from './themeButton';
 
 export default function Navbar() {
+  const {theme} = useTheme()
+
   return (
-    <div>
+    <nav className={theme}>
       <$NavbarContainer>
+      <ThemeToggleButton/>
+
         <$LinkContainer>
           <Link href="/">
               <h1>Home</h1>
@@ -15,7 +21,7 @@ export default function Navbar() {
           </Link>
         </$LinkContainer>
       </$NavbarContainer>
-    </div>
+    </nav>
   );
 }
 
