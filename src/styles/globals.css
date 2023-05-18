@@ -46,9 +46,6 @@ body, html{
   appearance: none;
 }
 
-h1,h2{
-  background: none;
-}
 
 a{
   position: relative;
@@ -80,8 +77,23 @@ a:hover {
   text-align: center;
 }
 
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading{
+  text-align: center;
+  font-size: 25px;
+  padding: 100px;
+}
 
-
+label,h1,h2{
+  background: none;
+}
+.background-none{
+  background: none;
+}
 
 .video img {
   width: 100%;

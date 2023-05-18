@@ -1,9 +1,43 @@
-import { useState, FormEvent } from 'react';
+import styled from 'styled-components';
+import { useState, FormEvent, useEffect } from 'react';
 import {useStore} from './useStore';
 import { JwtPayload } from 'jsonwebtoken';
-import  jwt  from 'jsonwebtoken';
-import { useEffect } from 'react';
+import jwt from 'jsonwebtoken';
 import axios from 'axios';
+
+// Styled components
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  width: 100%;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+`;
+
+const StyledInput = styled.input`
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const StyledButton = styled.button`
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -11,10 +45,9 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const setUser = useStore((state) => state.setUser);
   const setUserId = useStore((state) => state.setUserId);
-
   const [token, setToken] = useState('');
   const {user} = useStore()
-  
+
   useEffect(() => {
     if(user){
       (async () => {
@@ -27,7 +60,6 @@ export default function Login() {
       })();
     }
   }, [user]);
-  
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -44,7 +76,6 @@ export default function Login() {
         setToken(token);
         localStorage.setItem('token', token);
 
-        // Decode the token to get the user information
         const decodedToken = jwt.decode(token) as JwtPayload;
         if (decodedToken) {
           setUser(decodedToken.username);
@@ -58,32 +89,32 @@ export default function Login() {
     }
   };
 
-
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="E-mail"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <button type="submit">Log In</button>
-    </form>
+    <StyledContainer>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledInput
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <StyledInput
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <StyledInput
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <StyledButton type="submit">Log In</StyledButton>
+      </StyledForm>
+    </StyledContainer>
   );
 }

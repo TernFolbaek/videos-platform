@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { videoStore, useStore} from './useStore';
 import Image from 'next/image';
+import styled from 'styled-components';
 
 // Define a type for Video
 interface Video {
@@ -47,12 +48,14 @@ const VideoList = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
+      <div className="center">
+        <$SearchBar
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="video-container">
       {videos.filter(video => {
     if (searchTerm === "") {
@@ -76,5 +79,14 @@ const VideoList = () => {
     </div>
   );
 };
+
+const $SearchBar = styled.input `
+      width: 250px;
+      height: 30px;
+      font-size: 25px;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 3px;
+`
 
 export default VideoList;

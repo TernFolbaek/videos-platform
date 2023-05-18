@@ -1,7 +1,49 @@
+import styled from 'styled-components';
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { videoStore, useStore } from "./useStore";
 import axios from 'axios';
+
+// Styled components
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+`;
+
+const StyledVideo = styled.video`
+  max-width: 90%;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
+const StyledInput = styled.textarea`
+  width: 300px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+const StyledButton = styled.button`
+  width: 300px;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 interface Comment {
   username: string;
@@ -123,17 +165,17 @@ const VideoId = () => {
   };
 
   if (!video.title) {
-    return <div>Loading...</div>;
+    return <div className='loading'>Loading...</div>;
   }
 
   return (
-    <div>
+    <StyledContainer>
       <h1>{video.title}</h1>
       <h4>{video.description}</h4>
-      <video width="320" height="240" controls>
+      <StyledVideo width="320" height="240" controls>
         <source src={video.video_path} type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </StyledVideo>
 
       <h3>Comments</h3>
       {comments.map((comment) => (
@@ -144,12 +186,11 @@ const VideoId = () => {
         </div>
       ))}
 
-      <form onSubmit={handleSubmitComment}>
-        <textarea value={newComment} onChange={handleCommentChange} />
-        <button type="submit">Add Comment</button>
-      </form>
-    </div>
-  );
-};
+      <StyledForm onSubmit={handleSubmitComment}>
+        <StyledInput value={newComment} onChange={handleCommentChange} />
+        <StyledButton type="submit">Add Comment</StyledButton>
+      </StyledForm>
+    </StyledContainer>
+  )}
 
 export default VideoId;

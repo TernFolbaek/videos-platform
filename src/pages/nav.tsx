@@ -4,16 +4,18 @@ import VideoList from ".";
 import { useTheme } from "../context/themeContext";
 import ThemeToggleButton from './themeButton';
 import videoImage from '../logos/video.png';  // Replace with your image path
+import lightVideoImage from '../logos/lightvideo.png'
 
 import Image from "next/image";
 export default function Navbar() {
   const {theme} = useTheme()
+  const logoImage = theme === "light" ? videoImage : lightVideoImage;
 
   return (
     <nav className={theme}>
       <$NavbarContainer>
         <$LogoContainer className="flex1">
-          <$Image src={videoImage} alt="switch to dark mode"/>
+          <$Image src={logoImage} alt="switch to dark mode"/>
         </$LogoContainer>
         <$LinkContainer>
           <$Link href="/">

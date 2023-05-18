@@ -11,7 +11,7 @@ const StyledForm = styled.form`
   align-items: center;
   gap: 15px;
   padding: 20px;
-  background: #f1f1f1;
+  background: lightblue;
   border-radius: 10px;
   width: 100%;
   max-width: 400px;
@@ -23,6 +23,7 @@ const StyledInput = styled.input`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
+  background-color: white;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -31,6 +32,8 @@ const StyledTextArea = styled.textarea`
   border-radius: 5px;
   border: none;
   resize: none;
+  background-color: white;
+
 `;
 
 const StyledButton = styled.button`
@@ -89,19 +92,19 @@ const UploadVideo = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <div>
+      <div className="background-none">
         <label htmlFor="title">Title:</label>
         <StyledInput type="text" id="title" value={form.title} onChange={handleChange} />
       </div>
-      <div>
+      <div className="background-none">
         <label htmlFor="description">Description:</label>
         <StyledTextArea id="description" value={form.description} onChange={handleChange} />
       </div>
-      <div>
+      <div className="background-none">
         <label htmlFor="video">Video:</label>
         <StyledInput type="file" id="video" name="video" accept="video/*" onChange={handleChange} />
       </div>
-      <div>
+      <div className="background-none">
         <label htmlFor="thumbnail">Thumbnail:</label>
         <StyledInput type="file" id="thumbnail" name="thumbnail" accept="image/*" onChange={handleChange} />
       </div>
