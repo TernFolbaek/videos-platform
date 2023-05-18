@@ -2,13 +2,54 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import {useStore} from "./useStore";
+import styled from "styled-components";
+
+// Here we define styled components
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: #f1f1f1;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+`;
+
+const StyledTextArea = styled.textarea`
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+`;
+
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  color: white;
+  background-color: #0070f3;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0051bb;
+  }
+`;
 
 const UploadVideo = () => {
-  const {user} = useStore()
-  const [form, setForm] = useState({user: user,  title: "", description: "", video: null, thumbnail: null });
+  const {user} = useStore();
+  const [form, setForm] = useState({user: user, title: "", description: "", video: null, thumbnail: null});
   const router = useRouter();
-
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -19,7 +60,6 @@ const UploadVideo = () => {
       setForm({ ...form, [id]: value });
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,17 +76,11 @@ const UploadVideo = () => {
       }
     });
 
-    
-
-    console.log("Request URL:", "/api/create-video");
-
-
     try {
-    const response = await axios.post("/api/create-video", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
-        
-      console.log(response.data);
+      const response = await axios.post("/api/create-video", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+      });
+
       router.push("/user-videos");
     } catch (error) {
       console.log(error);
@@ -54,26 +88,27 @@ const UploadVideo = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title:</label>
-        <input type="text" id="title" value={form.title} onChange={handleChange} />
+        <StyledInput type="text" id="title" value={form.title} onChange={handleChange} />
       </div>
       <div>
         <label htmlFor="description">Description:</label>
-        <textarea id="description" value={form.description} onChange={handleChange} />
+        <StyledTextArea id="description" value={form.description} onChange={handleChange} />
       </div>
       <div>
         <label htmlFor="video">Video:</label>
-        <input type="file" id="video" name="video" accept="video/*" onChange={handleChange} />
+        <StyledInput type="file" id="video" name="video" accept="video/*" onChange={handleChange} />
       </div>
       <div>
         <label htmlFor="thumbnail">Thumbnail:</label>
-        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" onChange={handleChange} />
+        <StyledInput type="file" id="thumbnail" name="thumbnail" accept="image/*" onChange={handleChange} />
       </div>
-      <button type="submit">Upload Video</button>
-    </form>
+      <StyledButton type="submit">Upload Video</StyledButton>
+    </StyledForm>
   );
 };
 
 export default UploadVideo;
+

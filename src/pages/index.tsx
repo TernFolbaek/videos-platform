@@ -2,12 +2,25 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { videoStore, useStore} from './useStore';
+import Image from 'next/image';
+
+// Define a type for Video
+interface Video {
+  id: string,
+  title: string,
+  description: string,
+  video_path: string,
+  thumbnail_path: string
+}
 
 const VideoList = () => {
-  const [videos, setVideos] = useState([]);
+  // Use the Video type for videos state
+  const [videos, setVideos] = useState<Video[]>([]);
   const setVideoId = videoStore((state) => state.setVideoId)
   const setUserId = useStore((state) => state.setUserId);
   const {user} = useStore()
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -33,20 +46,33 @@ const VideoList = () => {
   }
 
   return (
-    <div className="video-container">
-      {videos.map((video: any) => (
-        <div className="video" key={video.id}>
-          <Link onClick={() => setId(video.id)} href={`/${video.id}`}>
-              <h2>{video.title}</h2>
-          </Link>
-          <p>{video.description}</p>
-          <p>{video.video_path}</p>
-          <video width="320" height="240" controls>
-            <source src={video.video_path} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      ))}
+    <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+      <div className="video-container">
+      {videos.filter(video => {
+    if (searchTerm === "") {
+        return video
+    } else if (video.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return video
+    }
+      }).map((video: Video) => (
+          <div className="video" key={video.id}>
+            <Link onClick={() => setId(video.id)} href={`/${video.id}`}>
+                <h2>{video.title}</h2>
+            </Link>
+            <p>{video.description}</p>
+            <video width="320" height="240" controls>
+              <source src={video.video_path} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
