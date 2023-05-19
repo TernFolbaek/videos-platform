@@ -22,7 +22,7 @@ export default function ThemeToggleButton() {
 }
 
 const $Image = styled(Image) `
-    width: 25px;
+    width: 35px;
     height: auto;
     border: none;
 

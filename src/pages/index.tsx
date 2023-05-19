@@ -13,6 +13,21 @@ interface Video {
   video_path: string,
   thumbnail_path: string
 }
+const $VideoContainer = styled.div`
+  border: 1px solid gray;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+`;
+
+const $Title = styled.h2`
+  font-size: 1.5em;
+  margin-bottom: 0.25em;
+`;
+
+const $Description = styled.p`
+  font-size: 1em;
+`;
 
 const VideoList = () => {
   // Use the Video type for videos state
@@ -66,13 +81,12 @@ const VideoList = () => {
       }).map((video: Video) => (
           <div className="video" key={video.id}>
             <Link onClick={() => setId(video.id)} href={`/${video.id}`}>
-                <h2>{video.title}</h2>
-            </Link>
-            <p>{video.description}</p>
             <video width="320" height="240" controls>
               <source src={video.video_path} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+                <h2>{video.title}</h2>
+            </Link>
           </div>
         ))}
       </div>
