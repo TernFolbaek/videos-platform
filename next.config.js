@@ -4,9 +4,6 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  images: {
-    domains: ['localhost'], // replace with your domain or IP
-  },
  
 };
 
