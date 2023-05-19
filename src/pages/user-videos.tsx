@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import {useStore} from "./useStore";
+import {useStore} from "../store/useStore";
 import styled from "styled-components";
 
 // Here we define styled components

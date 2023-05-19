@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import { videoStore, useStore} from './useStore';
+import { videoStore, useStore} from '../store/useStore';
 import Image from 'next/image';
 import styled from 'styled-components';
 

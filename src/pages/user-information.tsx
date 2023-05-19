@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useStore } from "./useStore";
+import { useStore } from "../store/useStore";
 import axios from "axios";
 
 const UserInformation = () => {

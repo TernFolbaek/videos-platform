@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, FormEvent, useEffect } from 'react';
-import {useStore} from './useStore';
+import {useStore} from '../store/useStore';
 import { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';

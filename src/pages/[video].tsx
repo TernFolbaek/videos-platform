@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
-import { videoStore, useStore } from "./useStore";
+import { videoStore, useStore } from "../store/useStore";
 import axios from 'axios';
 
 // Styled components

@@ -6,7 +6,7 @@ import ThemeToggleButton from './themeButton';
 import videoImage from '../logos/video.png';  // Replace with your image path
 import lightVideoImage from '../logos/lightvideo.png'
 import pfp from '../logos/user.png'
-import { useStore } from "./useStore";
+import { useStore } from "../store/useStore";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
