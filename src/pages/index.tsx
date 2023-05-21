@@ -41,7 +41,7 @@ const VideoList = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('http://localhost:2000/api/videos');
+        const response = await axios.get('https://1bwbo035k6.execute-api.eu-north-1.amazonaws.com/staging/api/videos');
         console.log(response)
         setVideos(
           response.data.map((video: any) => ({
