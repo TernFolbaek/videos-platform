@@ -80,7 +80,7 @@ const UploadVideo = () => {
     });
 
     try {
-      const response = await axios.post("/api/create-video", formData, {
+      const response = await axios.post("http://localhost:2000/api/createVideo", formData, {
           headers: { "Content-Type": "multipart/form-data" },
       });
 

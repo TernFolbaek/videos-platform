@@ -14,7 +14,7 @@ const UserInformation = () => {
     if (user) {
       (async () => {
         try {
-          const response = await axios.post("/api/userId", { username: user });
+          const response = await axios.post("http://localhost:2000/api/userId", { username: user });
           setUserId(response.data.userId);
         } catch (err) {
           console.error(err);

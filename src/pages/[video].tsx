@@ -72,7 +72,7 @@ const VideoId = () => {
       isMounted.current = true;
       (async () => {
         try {
-          const response = await fetch("/api/specificVideo", {
+          const response = await fetch("http://localhost:2000/api/specificVideo", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

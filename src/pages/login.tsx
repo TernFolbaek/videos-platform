@@ -48,24 +48,13 @@ export default function Login() {
   const [token, setToken] = useState('');
   const {user} = useStore()
 
-  useEffect(() => {
-    if(user){
-      (async () => {
-        try {
-          const response = await axios.post('/api/userId', { username: user });
-          setUserId(response.data.userId);
-        } catch (err) {
-          console.error(err);
-        }
-      })();
-    }
-  }, [user]);
+  
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:2000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, email }),
