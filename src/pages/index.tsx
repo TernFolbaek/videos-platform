@@ -41,7 +41,7 @@ const VideoList = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('https://main.dkbjjw06tx2w8.amplifyapp.com/api/videos');
+        const response = await axios.get('/api/videos');
         console.log(response)
         setVideos(
           response.data.map((video: any) => ({
